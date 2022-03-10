@@ -1,0 +1,179 @@
+
+version: 2
+
+models:
+  - name: addresses_model
+    description: "Unique adresses across users and orders, 5 columns"
+    columns:
+      - name: address_id
+        description: "primary key, varchar"
+        tests:
+          - unique
+          - not_null
+      - name: address
+        description: "adress information, varchar"
+        tests:
+          - not_null
+      - name: zipcode
+        description: "zipcode information, int"
+        tests:
+          - not_null
+      - name: state
+        description: "state information, varchar"
+      - name: country
+        description: "country information, varchar"
+  - name: events_model
+    description: "Unique events by users, 8 columns"
+    columns:
+      - name: event_id
+        description: "Primary Key"
+        tests:
+          - unique
+          - not_null
+      - name: session_id
+        description: "Identifies Session, varchar"
+        tests:
+          - not_null
+      - name: user_id
+        description: "Foreign key from users, varchar"
+        tests:
+          - not_null
+      - name: page_url
+        description: "URL information, varchar"
+      - name: created_at
+        description: "Date of event, timestamp"
+        tests:
+          - not_null
+      - name: event_type
+        description: "Type of event, varchar"
+        tests:
+          - not_null
+      - name: order_id
+        description: "Foreign Key from orders, varchar"
+        tests:
+          - not_null
+      - name: product_id
+        description: "Foreign Key from products, varchar"
+  - name: orderItems_model
+    description: "Starter Model order items"
+    columns:
+      - name: order_id
+        description: "Foreign Key from orders , varchar"
+        tests:
+          - unique
+          - not_null
+      - name: product_id
+        description: "Foreign Key from products, varchar"
+        tests:
+          - not_null
+      - name: quantity
+        description: "Number of items per product and order, int"
+        tests:
+          - not_null
+  - name: orders_model
+    description: "A starter model for orders"
+    columns:
+      - name: order_id,
+        description: "Pimary Key, varchar"
+        tests:
+          - unique
+          - not_null
+      - name: user_id
+        description: "Foreign Key from users, varchar"
+        tests:
+          - not_null
+      - name: promo_id
+        description: "Foreign Key from promos, varchar"
+        tests:
+          - not_null
+      - name: address_id
+        description: "Foreign Key from adresses, varchar"
+        tests:
+          - not_null
+      - name: created_at
+        description: "time of order creation, timestamp"
+        tests:
+          - not_null
+      - name: order_cost
+        description: "cost of order, float"
+        tests:
+          - not_null
+      - name: shipping_cost
+        description: "cost of shipping, float"
+      - name: order_total
+        description: "total cost, float"
+        tests:
+          - not_null
+      - name: tracking_id
+        description: "shipment tracking identifier, varchar"
+      - name: shipping_service
+        description: "shipment service provider"
+      - name: estimated_delivery_at
+        description: ""
+      - name: delivered_at
+        description: "Delivery date to customer, timestamp"
+      - name: status
+        description: "Shipment status, varchar"
+        tests:
+          - not_null
+  - name: products_model
+    description: "A starter model for products"
+    columns:
+      - name: product_id
+        description: "Primary Key for products, varchar"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "product name, varchar"
+        tests:
+          - not_null
+      - name: price
+        description: "product price, float"
+        tests:
+          - not_null
+      - name: inventory
+        description: "Number of items in inventory, int"
+        tests:
+          - not_null
+  - name: promos_model
+    description: "model for product promotion"
+    columns:
+      - name: promo_id
+        description: "Primary key for promotion"
+        tests:
+          - unique
+          - not_null
+      - name: discount
+        description: "value of promotion discount"
+      - name: status
+        description: "Status of promotion"
+        tests:
+          - not_null
+  - name: superheroes_model
+    description: "test model for sanity"
+  - name: users_model
+    description: "model for users"
+    columns:
+      - name: user_id
+        description: "Primary Key for users, varchar"
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: "First name of user, varchar"
+      - name: last_name
+        description: "last name of user, varchar"
+      - name: email
+        description: "e-mail of user, varchar"
+      - name: phone_number
+        description: "phone number of user, varchar"
+      - name: created_at
+        description: "date of user creation, timestamp"
+        tests:
+          - unique
+          - not_null
+      - name: updated_at
+        description: "date of updated user profile, timestamp"
+      - name: address_id
+        description: "adress of user, varchar"

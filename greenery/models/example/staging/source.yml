@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: source
+    database: dbt
+    schema: public
+    tables:
+      - name: addresses
+      - name: events
+      - name: order_items
+      - name: orders
+      - name: products
+      - name: promos
+      - name: superheroes
+      - name: users
