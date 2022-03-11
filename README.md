@@ -17,7 +17,7 @@ SELECT count(
   distinct user_id)
 FROM dbt.dbt_georg_o.users_model
 ```
-output: 130
+output: **130**
 
 Question 2: 
 On average, how many orders do we receive per hour?
@@ -32,7 +32,7 @@ FROM (
   GROUP BY order_hour
 ) as a
 ```
-output: 7.5208333333333333
+output: **7.520**
 
 Question 3: 
 On average, how long does an order take from being placed to being delivered?
@@ -47,7 +47,7 @@ FROM (
   FROM dbt.dbt_georg_o.orders_model
   WHERE status = 'delivered') as a
 ```
-output: 3 days 21:24:11.803279
+output: **3 days 21:24:11**
 
 Question 4: 
 How many users have only made one purchase? Two purchases? Three+ purchases?
@@ -55,7 +55,6 @@ How many users have only made one purchase? Two purchases? Three+ purchases?
 ```sql 
 SELECT /* count no. of users per purchase group*/
   count(user_id) as no_users, 
-  sum(no_orders) as no_total_purchases, 
   order_group
 FROM(
   SELECT /*Define purchase groups, based on no. of purchases*/
@@ -76,11 +75,11 @@ GROUP BY order_group
 ```
 output: 
 
-|no_users|no_total_purchases|order_group|
-|---|---|---|
-|28|56|two puchases|
-|25|25|one purchase|
-|71|280|three+ purchases|
+|no_users|order_group|
+|---|---|
+|28|two puchases|
+|25|one purchase|
+|71|three+ purchases|
 
 Question 5: 
 On average, how many unique sessions do we have per hour?
@@ -95,5 +94,5 @@ FROM (
   From dbt.dbt_georg_o.events_model
   GROUP BY session_hour) as a
 ```
-output: 16.3275862068965517
+output: **16.327**
 
