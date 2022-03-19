@@ -8,6 +8,78 @@ Template repository for the projects and environment of the course: Analytics en
 
 Apache 2.0
 
+## Week 2
+
+**Part 1**
+**Questions 1**: What is our user repeat rate?
+
+```sql 
+SELECT /* Calculate the rate of repeting buyers to all buyers - Repeat Rate*/
+  cast(no_repeater AS FLOAT) / cast(no_users AS FLOAT) as Repeat_rate
+  FROM(  
+    SELECT/* Count number of users and those who repeatedly buy*/
+      COUNT( 
+        CASE WHEN repeat_type = 'repeater' THEN 1 END
+        ) AS no_repeater, 
+      COUNT(*) AS no_users
+      FROM (   
+        SELECT /* categorize user in buyer groups*/
+          no_orders, 
+          user_id,
+          case
+            when no_orders > 1 then 'repeater'
+            when no_orders = 1 then 'singular'
+          END as repeat_type
+        FROM (SELECT /* Number of orders per User_id*/
+               count(order_id) as no_orders, 
+               user_id
+              FROM dbt.dbt_georg_o.orders_model
+              GROUP BY user_id) as a 
+        ) as b
+      )as c
+```
+Output: **0.798**
+
+**Questions 2**: What are good indicators of a user who will likely purchase again?
+
+Who? 
+  - Age
+  - Place
+  - Gender
+
+Why? 
+  - Promo Codes, are people tempted by special promotions? 
+  - Conversion: Are people who visit the site often more likely to buy somethin? (events data)
+
+What? 
+  - Are some products more likely to be bought multiple times? 
+  - Price
+
+**Questions 3**: Creating Data Marts
+
+What Metrics are useful for each business unit? 
+
+**Core**: The core business is the essential activity in our company and the way to generate money. Greenery's core business is selling and delivering flowers and houseplants. A reasonable question would be, how much are we selling and are we delivering in time. So in a stricter sense I'm not directly interested in who is buying, what is selling best and how are promotions going. So the focus lies on questions like informations about orders, repeated orders, time to delivery and events happening until an order has been completed. Therefore orders, order_items and events are data we are interested in. 
+
+fct_orders
+dim_user
+dim_products
+
+**Marketing**:
+Who are our customers and how are they behaving on our platform 
+fct_UserOrder
+
+**Product**: What are the products being sold? 
+grain: A product being sold
+Dimensions: orders, products, promos
+
+fct_ProductOrder
+dim_order
+dim_product
+dim_promo
+
+
+## WEEK 1
 
 Question 1: 
 How many users do we have?

@@ -1,0 +1,9 @@
+
+version: 2
+
+models:
+  - name: int_orders_info
+    description: "joined information about orderflow, regarding orders, its items and the product itsel"
+  - name: fct_orders
+    description: "Aggregated and calculated information about the order"
+   

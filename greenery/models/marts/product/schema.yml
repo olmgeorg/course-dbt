@@ -1,0 +1,19 @@
+
+version: 2
+
+models:
+  - name: dim_events
+    description: "Unique adresses across users and orders, 5 columns"
+
+  - name: dim_products
+    description: "Unique events by users, 8 columns"
+
+  - name: dim_orders_p
+    description: "Starter Model order items"
+   
+  - name: int_product_events
+    description: "A starter model for orders"
+
+  - name: fct_product_events
+    description: "A starter model for orders"
+   
