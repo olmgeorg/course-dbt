@@ -3,7 +3,23 @@ version: 2
 
 models:
   - name: int_orders_info
-    description: "joined information about orderflow, regarding orders, its items and the product itsel"
+    description: "intermediate model to aggregate information on an order level"
+    columns:
+      - name: order_id
+        description: "unique id per order"
+        tests:
+          - not_null
+      - name: product_id
+        description: "unique id per product"
+        tests:
+          - not_null
   - name: fct_orders
     description: "Aggregated and calculated information about the order"
-   
+    columns:
+      - name: order_id
+        description: "unique id for an order"
+        tests:
+          - unique
+          - not_null
+
+

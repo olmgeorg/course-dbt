@@ -50,8 +50,6 @@ models:
           - not_null
       - name: order_id
         description: "Foreign Key from orders, varchar"
-        tests:
-          - not_null
       - name: product_id
         description: "Foreign Key from products, varchar"
   - name: stg_orderItems
@@ -60,7 +58,6 @@ models:
       - name: order_id
         description: "Foreign Key from orders , varchar"
         tests:
-          - unique
           - not_null
       - name: product_id
         description: "Foreign Key from products, varchar"
@@ -73,7 +70,7 @@ models:
   - name: stg_orders
     description: "A starter model for orders"
     columns:
-      - name: order_id,
+      - name: order_id
         description: "Pimary Key, varchar"
         tests:
           - unique
@@ -84,8 +81,6 @@ models:
           - not_null
       - name: promo_id
         description: "Foreign Key from promos, varchar"
-        tests:
-          - not_null
       - name: address_id
         description: "Foreign Key from adresses, varchar"
         tests:

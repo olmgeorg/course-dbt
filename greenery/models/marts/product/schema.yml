@@ -3,17 +3,53 @@ version: 2
 
 models:
   - name: dim_events
-    description: "Unique adresses across users and orders, 5 columns"
-
+    description: "dimension model for events"
+    columns:
+      - name: event_id
+        description: "unique id for events"
+        tests:
+          - not_null
+          - unique
+    
   - name: dim_products
-    description: "Unique events by users, 8 columns"
+    description: "dimension model regarding unique products"
+    columns:
+      - name: product_id
+        description: "unique id for products"
+        tests:
+          - not_null
+          - unique
 
   - name: dim_orders_p
-    description: "Starter Model order items"
+    description: "Dimension model for order in the product mart"
+    columns:
+      - name: order_id
+        description: "unique id for orders"
+        tests:
+          - not_null
+          - unique
    
   - name: int_product_events
-    description: "A starter model for orders"
+    description: "intermediate model for aggregating events on a product level"
+    columns:
+      - name: session_id
+        description: "session id where the events happened"
+        tests:
+          - not_null
+      - name: event_id
+        description: "unique id for each event"
+        tests:
+          - not_null
 
   - name: fct_product_events
-    description: "A starter model for orders"
+    description: "fact model for events happened on a product level"
+    columns:
+      - name: product_id
+        description: "unique product identifier"
+        tests:
+          - not_null
+          - unique
+   
+
+
    

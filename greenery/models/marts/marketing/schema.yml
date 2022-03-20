@@ -4,10 +4,28 @@ version: 2
 models:
   - name: dim_orders_m
     description: "Information per order"
+    columns:
+      - name: order_id
+        description: "unique id for orders"
+        tests:
+          - not_null
+          - unique
 
   - name: dim_users
     description: "information per user"
+    columns:
+      - name: user_id
+        description: "unique id per user"
+        tests:
+          - unique
+          - not_null
 
   - name: fct_user_order
     description: "Order information on a user level"
+    columns:
+      - name: user_id
+        description: "unique id per user"
+        tests:
+          - unique
+          - not_null
    

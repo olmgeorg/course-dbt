@@ -5,8 +5,7 @@
 }}  
 
 SELECT
+  order_id,
   product_id,
-  name,
-  price,
-  inventory
-FROM {{ref('stg_products')}}
+  quantity
+FROM {{ref('stg_orderItems')}}
