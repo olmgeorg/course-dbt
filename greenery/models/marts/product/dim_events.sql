@@ -4,19 +4,15 @@
   )
 }}  
 
+{% set event_type_bool = ["page_view", "add_to_cart", "checkout"] %}
+
 SELECT 
   event_id,
   session_id,
   event_type,
   order_id,
-  product_id,
-  CASE 
-    WHEN event_type = 'package_shipped' then 1 ELSE 0
-  END AS is_shipped, 
-  CASE 
-    WHEN event_type = 'add_to_cart' then 1 ELSE 0
-  END AS is_added, 
-  CASE 
-    WHEN event_type = 'page_view' then 1 ELSE 0
-  END AS is_viewed
+  {% for event_type in event_type_bool %}
+    case when event_type = '{{event_type}}' then 1 else 0 end as is_{{event_type}},
+  {% endfor %}
+  product_id
 FROM {{ref('stg_events')}}
