@@ -4,14 +4,14 @@
   )
 }}  
 
-{% set event_type_bool = ["page_view", "add_to_cart", "checkout"] %}
+{% set event_type_state = dbt_utils.get_column_values(table=ref('stg_events'), column='event_type') %}
 
 SELECT 
   event_id,
   session_id,
   event_type,
   order_id,
-  {% for event_type in event_type_bool %}
+  {% for event_type in event_type_state %}
     case when event_type = '{{event_type}}' then 1 else 0 end as is_{{event_type}},
   {% endfor %}
   product_id
