@@ -24,7 +24,7 @@ SELECT
   product_id,
   sum(checkout_in_session) as no_checkout, 
   count(session_id) no_viewed,
-  cast(sum(checkout_in_session) as numeric(16,2))/cast(count(session_id) as numeric(5,2)) as product_conversion_rate,
+  cast(sum(checkout_in_session) as decimal)/cast(count(session_id) as decimal) as product_conversion_rate,
   max("total_conversion_rate".total_conversion_rate) as total_conversion_rate
 FROM checkout_per_session
 LEFT JOIN total_conversion_rate ON 1=1
