@@ -1,12 +1,105 @@
 # Analytics engineering with dbt
 
-Template repository for the projects and environment of the course: Analytics engineering with dbt
+## Week 3
 
-> Please note that this sets some environment variables so if you create some new terminals please load them again.
+**Part 1**
 
-## License
+What is our overall conversion rate?
+**0.62**
 
-Apache 2.0
+What is our conversion rate by product?
+Can be found in `fct_conversion.sql`
+
+```sql 
+with checkout_per_session as (
+    SELECT 
+        session_id, 
+        max(product_id) as product_id,
+        max(is_checkout) as checkout_in_session
+    FROM {{ref('int_product_events')}}
+    GROUP BY session_id
+),
+
+total_conversion_rate as (
+    SELECT 
+        cast(sum(checkout_in_session) as decimal)/cast(count(session_id) as decimal) as total_conversion_rate
+    from checkout_per_session
+)
+
+
+SELECT 
+  product_id,
+  sum(checkout_in_session) as no_checkout, 
+  count(session_id) no_viewed,
+  cast(sum(checkout_in_session) as decimal)/cast(count(session_id) as decimal) as product_conversion_rate,
+  max("total_conversion_rate".total_conversion_rate) as total_conversion_rate
+FROM checkout_per_session
+LEFT JOIN total_conversion_rate ON 1=1
+GROUP BY product_id
+```
+**Part 2**
+
+Create a macro to simplify part of a model
+
+Old Query
+```sql
+SELECT 
+   CASE 
+     WHEN event_type = 'package_shipped' then 1 ELSE 0
+   END AS is_shipped, 
+   CASE 
+     WHEN event_type = 'add_to_cart' then 1 ELSE 0
+   END AS is_added, 
+   CASE 
+     WHEN event_type = 'page_view' then 1 ELSE 0
+   END AS is_viewed
+FROM {{ref('stg_events')}}
+```
+
+New Query
+```sql
+{% set event_type_state = dbt_utils.get_column_values(table=ref('stg_events'), column='event_type') %}
+
+SELECT 
+  {% for event_type in event_type_state %}
+    case when event_type = '{{event_type}}' then 1 else 0 end as is_{{event_type}},
+  {% endfor %}
+FROM {{ref('stg_events')}}
+```
+
+**Part 3**
+
+Create Hooks
+```yml
+models:
+  greenery:
+    # Config indicated by + and applies to all files under models/example/
+    example:
+      +materialized: view
+    post-hook: "GRANT SELECT ON {{ this }} TO reporting"
+
+on-run-end:
+  - "GRANT USAGE ON SCHEMA {{ schema }} TO reporting"
+```
+
+**Part 4**
+Install Packages
+
+```yml
+packages:
+  - package: dbt-labs/dbt_utils
+    version: 0.8.2
+```
+`dbt deps`
+
+```sql 
+{% set event_type_state = dbt_utils.get_column_values(table=ref('stg_events'), column='event_type') %}
+```
+
+**Part 5**
+Updated DAG
+
+![](/greenery/models/dbt-dag.png)
 
 ## Week 2
 
@@ -95,7 +188,6 @@ What is our product?
 How much is it viewed, added to cart and finally shipped. 
 Calculating the ratios between these factors. 
 
-![](/greenery/models/dbt-dag.png)
 
 **Part 2**
 
@@ -201,3 +293,6 @@ FROM (
 ```
 output: **16.327**
 
+## License
+
+Apache 2.0
