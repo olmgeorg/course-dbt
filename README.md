@@ -1,5 +1,32 @@
 # Analytics engineering with dbt
 
+## Week 4
+
+**Part 2:** Modeling challenge
+
+The Funnel Model is very similar to the work I already did in Week 2, so I was able to build upon that. Small adaptions to my fct_product_events.sql made for a good solution. 
+
+I needed to correct a mistake in the calculation of total pages views and in order to to consider for tracking our quarterly goals over the long term, I extracted and grouped by quarter the events happen. Now we can compare our conversion rate per product and quarter.  
+Below, you can see a snippet of the resulting table. 
+
+![](/greenery/models/fct_prodcut_events_scrsht.png)
+
+My model `fct_product_events` was also marked as exposed to the public, as can be seen in the documentation and the following screenshot.
+
+![](/greenery/models/dbt-dag-2.png)
+
+
+**Part 3:** Reflection questions -- please answer 3A or 3B, or both!
+
+**3A.** I'm currently not employed, so I don't need to convince anybody of using DBT. But in my old company it would resolve a lot problems we had in building our data foundation. It improves documentation and makes handling many models and many variants of models way easier.
+
+I loved how we were immediately confronted with proven best practices of using DBT, were able to utilise it and create our own repository of a DBT project. These things will prove useful, when I finally can use DBT in my next project. 
+
+I plan to move into analytics engineering and this course provided valuable insights in how an analytics team works and thinks. 
+
+**3B.** From what I saw, I would focus on using DBT core and implement it in a broader landscape of tools. Here I am valuing the flexibitliy and open community of an open source DBT Core. I want to utilize the strength of a tool and thereby prefer an orchestration tool like airflow/dagster over DBT Cloud. 
+
+
 ## Week 3
 
 **Part 1**

@@ -14,6 +14,7 @@ SELECT
   is_checkout, 
   is_add_to_cart, 
   is_page_view, 
+  quarter,
   CASE 
     WHEN "dim_events".product_id IS NULL THEN "dim_ordersItems".product_id ELSE "dim_events".product_id
   END AS product_id

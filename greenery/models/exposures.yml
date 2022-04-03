@@ -1,0 +1,15 @@
+version: 2
+
+exposures:
+  
+  - name: Product Funnel Dashboard
+    type: dashboard
+    maturity: high
+    description: >
+      Conversion Funnel by product on greenery database.
+    
+    depends_on:
+      - ref('fct_product_events')
+      
+    owner:
+      name: Georg Olm

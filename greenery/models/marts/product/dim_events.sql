@@ -11,6 +11,8 @@ SELECT
   session_id,
   event_type,
   order_id,
+  date_trunc('quarter', created_at) AS quarter,
+  created_at,
   {% for event_type in event_type_state %}
     case when event_type = '{{event_type}}' then 1 else 0 end as is_{{event_type}},
   {% endfor %}
